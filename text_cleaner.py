@@ -4,10 +4,10 @@ from tkinter import filedialog, messagebox
 
 def clean_text(text):
     """
-    Removes special characters from the text, leaving only plain text.
+    Removes special characters from the text, leaving only plain text. including underscores.
     """
     # Regular expression to remove all characters except letters, digits, spaces, and basic punctuation.
-    return re.sub(r'[^\w\s.,!?\'"-]', '', text)
+    return re.sub(r'[^\w\s.,!?\'"-]|_', '', text)
 
 def load_file():
     """
