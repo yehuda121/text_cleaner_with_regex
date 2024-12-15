@@ -41,8 +41,10 @@ def clean_from_input():
     # Clean the text
     cleaned_text = clean_text(input_text)
     # Display the cleaned text in the output text box
+    text_output.config(state=tk.NORMAL)  # Enable editing temporarily
     text_output.delete("1.0", tk.END)
     text_output.insert("1.0", cleaned_text)
+    text_output.config(state=tk.DISABLED)  # Make it read-only again
 
 # Create the main Tkinter window
 root = tk.Tk()
@@ -58,6 +60,11 @@ text_input_label.pack()
 text_input = tk.Text(root, height=10, width=50)
 text_input.pack(pady=5)
 
+# Add a scroll bar for the input area
+input_scrollbar = tk.Scrollbar(root, command=text_input.yview)
+input_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+text_input.config(yscrollcommand=input_scrollbar.set)
+
 # Button to clean the text entered in the input box
 clean_button = tk.Button(root, text="Clean Input Text", command=clean_from_input)
 clean_button.pack(pady=10)
@@ -65,8 +72,13 @@ clean_button.pack(pady=10)
 # Output area to display the cleaned text
 text_output_label = tk.Label(root, text="Cleaned text:")
 text_output_label.pack()
-text_output = tk.Text(root, height=10, width=50)
+text_output = tk.Text(root, height=10, width=50, state=tk.DISABLED)  # Make it read-only
 text_output.pack(pady=5)
+
+# Add a scroll bar for the output area
+output_scrollbar = tk.Scrollbar(root, command=text_output.yview)
+output_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+text_output.config(yscrollcommand=output_scrollbar.set)
 
 # Run the Tkinter main loop
 root.mainloop()
