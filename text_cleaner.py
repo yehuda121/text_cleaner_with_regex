@@ -7,7 +7,14 @@ def clean_text(text):
     Removes special characters from the text, leaving only plain text. including underscores.
     """
     # Regular expression to remove all characters except letters, digits, spaces, and basic punctuation.
-    return re.sub(r'[^\w\s.,!?\'"-]|_', '', text)
+    text = re.sub(r'[^\w\s.,!?\'"-]|_', '', text)
+    # Replace sequences of 3 or more '-' with a single '-'
+    text = re.sub(r'-{2,}', '-', text)
+    # Remove standalone dashes (no words before or after)
+    text = re.sub(r'(?<!\w)-{1}(?!\w)', '', text)
+    # Limit empty lines to one between non-empty lines
+    text = re.sub(r'\n\s*\n+', '\n\n', text)
+    return text
 
 def load_file():
     """
